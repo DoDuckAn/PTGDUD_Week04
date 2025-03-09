@@ -13,6 +13,7 @@ import { CiBookmark } from "react-icons/ci";
 import { MdNavigateNext } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
 import { useEffect, useState } from "react";
+import {Recipe} from "./Recipe"
 
 function Chefify() {
   const style={
@@ -26,14 +27,13 @@ function Chefify() {
   const [recipeList,setRecipeList]=useState([])
   
   useEffect(()=>{
-    fetch('https://67cd4770dd7651e464ede9b0.mockapi.io/Recipes')
+    fetch('https://67cd6670dd7651e464ee43e8.mockapi.io/Recipe')
         .then(res=>res.json())
         .then(data=>{
-            console.log('data',data)
             setRecipeList(data)
-            console.log('list:',recipeList)
         })
   },[])
+    
 
     return (
       <div style={{
@@ -48,7 +48,7 @@ function Chefify() {
           width: '1440px',
           height:'953px'
       }}>
-          <div className="Header" style={{ backgroundColor: 'white', gridArea: 'Header',display:'flex',justifyContent:"center",alignItems:"center",border:'3px solid gray',padding:'10px 30px'}}>
+          <div className="Header" style={{ backgroundColor: 'white', gridArea: 'Header',display:'flex',justifyContent:"center",alignItems:"center",border:'3px solid #cfcdc8',padding:'10px 30px'}}>
               <div style={{display:'flex',flex:4}}>
                 <img src={chefify} alt=""/>
                 <input type="text" placeholder="cakescasca" style={{backgroundColor:'#F3F4F6FF',borderRadius:15,border:0,marginLeft:'20px',width:'100%',paddingLeft:20}}/>
@@ -70,47 +70,41 @@ function Chefify() {
                 <img src={avatar} alt=""/>
               </div>
           </div>
-          <div className="Content" style={{gap:30,padding:'30px 100px',gridArea: 'Content',borderRight:'3px solid gray',borderLeft:'3px solid gray',display:"flex",flexDirection:'column' }}>
+          <div className="Content" style={{gap:30,padding:'30px 100px',gridArea: 'Content',borderRight:'3px solid #cfcdc8',borderLeft:'3px solid #cfcdc8',display:"flex",flexDirection:'column' }}>
               <div style={{display:"flex"}}>
-                <p style={{color:"black"}}>Home</p>
+                <p style={{color:"black",fontSize:18,fontWeight:"bold"}}>Home</p>
                 <p style={{color:"black", marginInline:10}}><MdNavigateNext size='28px'/></p>
-                <p style={{color:"pink"}}>Your Recipe Box</p>
+                <p style={{color:"#F44B87FF",fontSize:18,fontWeight:"bold"}}>Your Recipe Box</p>
               </div>
-              <div>
+              <div style={{marginTop:20}}>
                 <p style={{color:'black',textAlign:"start",fontSize:32,fontWeight:"bold",marginBottom:20}}>Emma Gonzalez's Recipe Box</p>
                 <div style={{display:"flex",justifyContent:"start",alignItems:"center"}}>
                     <img width='164px' height='164px' src={avatar}/>
                     <div style={{display:"flex",flexDirection:"column",paddingLeft:40}}>
-                        <p style={{color:"#424955FF",textAlign:"start",fontSize:16}}>Emma Gonzalez is a deputy editor at Chefify, bringing her expertise as a former cooking editor at The Los Angeles Times. She is 
+                        <p style={{color:"#424955FF",textAlign:"start",fontSize:18}}>Emma Gonzalez is a deputy editor at Chefify, bringing her expertise as a former cooking editor at The Los Angeles Times. She is 
                             also an accomplished author, contributing to numerous cookbooks and food publications.
                             Originally from East Los Angeles, Emma now resides in New York City, where she explores
                              a wide range of culinary delights.</p>
                         <div style={{display:"flex",alignItems:"center",gap:30,marginTop:40}}>
                             <p style={{color:'#F44B87FF'}}>6.5k Subcribes</p>
-                            <button style={{backgroundColor:'#F44B87FF',padding:10}}>Share<span><RiShareForwardLine/></span></button>
+                            <button style={{backgroundColor:'#F44B87FF',padding:10,color:'white',display:'flex',gap:5}}>Share<span style={{display:"flex",alignItems:"center"}}><RiShareForwardLine size={20}/></span></button>
                         </div>
                     </div>
                 </div>
                 
               </div>
-                <div class="table-item">
-                    <div style={{display:'flex',width:'100%',borderBottom:'1px solid #424955FF'}}>
+                <div className="table-item">
+                    <div style={{display:'flex',width:'100%',borderBottom:'3px solid #cfcdc8'}}>
                         <button style={{borderRadius:"20px 20px 0 0",backgroundColor:'#FBC8DAFF',color:'#F44B87FF',fontWeight:"bolder",padding:15}}>Saved Recipes</button>
                         <button style={{borderRadius:"20px 20px 0 0",backgroundColor:'white',color:'#424955FF',fontWeight:"bolder",padding:15}}>Folders</button>
                         <button style={{borderRadius:"20px 20px 0 0",backgroundColor:'white',color:'#424955FF',fontWeight:"bolder",padding:15}}>Recipes by Genevene</button>
                     </div>
-                    <div style={{marginTop:40,display:"flex",flexWrap:'wrap'}}>
-                        <div style={{display:'flex',flexDirection:'column',border:'1px solid black',borderRadius:'20px 20px 0 0'}}>
-                            <img height={'176px'} width={'273px'} style={{borderRadius:'10px 10px 0 0',objectFit:"contain"}}/>
-                            <div style={{display:'flex',flexDirection:'column',padding:10}}>
-                            <div style={{display:'flex'}}>
-                                <p style={{color:'black',width:'200px',textAlign:'start'}}>italian style tomato salad</p>
-                                <button style={{borderRadius:100,margin:'0',backgroundColor:'white',border:'1px solid #F44B87FF',color:'#F44B87FF'}}><CiBookmark /></button>
-                            </div>
-                            <p style={{lineHeight:'40px',color:'#F44B87FF',backgroundColor:'#FBC8DAFF',width:'40%',borderRadius:30}}>15 min</p>
-                            </div>
-                        </div>
-                        
+                    <div style={{marginTop:40,display:"flex",flexWrap:'wrap',gap:30}}>                      
+                        {recipeList.map((data,index)=>{
+                          return(
+                            <Recipe key={index} item={data}/>
+                          )
+                        })}
                     </div>
                 </div>
           </div>
